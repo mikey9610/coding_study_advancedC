@@ -1,13 +1,14 @@
+#ifndef BASIC
+#define BASIC
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
+#include <conio.h>
 
 // TRUE FALSE
 #define TRUE	1
 #define FALSE	0
-
-
-
-/*
 
 // KEY
 #define	LEFT	75
@@ -15,6 +16,15 @@
 #define UP		72
 #define	DOWN	80
 #define ENTER	13
+
+void setCursorPosition(int x, int y);
+
+void setCursorVisible(WINBOOL visible);
+
+void setCursorColor(int foreground, int background);
+
+/*
+
 
 // COLOR CONSTANTS
 #define C_BLACK		0
@@ -34,24 +44,6 @@
 #define C_BRIGHT_MAGENTA	13
 #define C_BRIGHT_YELLOW		14
 #define C_BRIGHT_WHITE		15
-
-void setCursorPosition(int x, int y) {
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
-}
-
-void setCursorVisible(WINBOOL visible) {
-    CONSOLE_CURSOR_INFO info;
-    info.bVisible = visible;
-	info.dwSize = 1;
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE),&info);
-}
-
-void setCursorColor(int foreground, int background) {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),background<<4|foreground);
-}
 
 int selectByKey(int min_x, int min_y, int max_x, int max_y, int tab_x, int tab_y, char* cursor, char* (*recover)(int)) {
 	int row_size = (tab_x==0)?1:(1+max_x-min_x)/tab_x;
@@ -96,3 +88,5 @@ int selectByKey(int min_x, int min_y, int max_x, int max_y, int tab_x, int tab_y
 		}
 	}
 }*/
+
+#endif

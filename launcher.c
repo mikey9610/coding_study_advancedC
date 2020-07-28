@@ -1,4 +1,5 @@
 #include "launcher.h"
+#include "game1_doughnut.h"
 
 void runProgram() {
 	int nMenu;
@@ -11,8 +12,7 @@ void runProgram() {
 		
 		switch(nMenu) {
 		case 1:
-			printf("menu1\n");
-			system("pause");
+			g1_runGame();
 			break;
 		
 		case 2:
@@ -32,7 +32,7 @@ void runProgram() {
 	}
 	printf("program exited...\n");
 	getchar();
-	getchar();	// 일시정지 용도로 사용 
+	getchar();
 }
 
 void showTitle() {
@@ -45,7 +45,7 @@ void showTitle() {
 int selectMainMenu() {
 	int nMenu;
 	system("cls"); // clean screen
-	printf("1. menu1 / 2. menu2 / 3. menu3 / 4. exit\n");
+	printf("1. Doughnut Game / 2. menu2 / 3. menu3 / 4. exit\n");
 	scanf("%d",&nMenu);
 	return nMenu;
 }
