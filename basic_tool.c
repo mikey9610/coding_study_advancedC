@@ -7,7 +7,7 @@ void setCursorPosition(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
 }
 
-void setCursorVisible(WINBOOL visible) {
+void setCursorVisible(int visible) {
     CONSOLE_CURSOR_INFO info;
     info.bVisible = visible;
 	info.dwSize = 1;

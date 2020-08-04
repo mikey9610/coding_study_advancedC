@@ -1,66 +1,38 @@
 #include "game1_doughnut.h"
 
 struct _g1_screenSize g1_screenSize = {1,20,3,15};
-// ì „ì—­ ë³€ìˆ˜ global variable
-// í™”ë©´ í¬ê¸° ì •ë³´ ì €ì¥
+// Àü¿ª º¯¼ö global variable
+// È­¸é Å©±â Á¤º¸ ÀúÀå
 
-const char g1_character[4] = "CH\0";
-const char g1_doughnut[4] = "DD\0";
-const char g1_stone[4] = "ST\0";
+const char g1_character[4] = "¡Ú\0";
+const char g1_doughnut[4] = "¡İ\0";
 
 void g1_runGame() {
 	int lv = 1;
 	setCursorVisible(FALSE);
 	while(lv<=3 && g1_runRound(lv)) lv++;
+	if(lv==4) {
+		system("cls");
+		printf("Doughnut Game Success!!!\n");
+		system("pause");
+	}
+	else {
+		system("cls");
+		printf("Doughnut Game Failed...\n");
+		system("pause");
+	}
 	setCursorVisible(TRUE);
 }
 
 int g1_runRound(int lv) {
-	int bDoughnut;	// í˜„ì¬ ë„ë„› ì¡´ì¬ ì—¬ë¶€
-	COORD cDoughnut; // í˜„ì¬ ë„ë„› ìœ„ì¹˜ x y
-	char chInput; // ë°©í–¥í‚¤ <- -> ì…ë ¥ ì €ì¥
-
-	g1_renderScreen();
-
-	while(TRUE) {
-		if(bDoughnut) {	// ë„ë„› ì¡´ì¬
-			// ë‚´ë¦¬ê¸°
-
-		}
-		else {	// ë„ë„› ì¡´ì¬ x
-			// ë„ë„› ë§Œë“ ë‹¤
-			cDoughnut.X = rand()%(g1_screenSize.max_x-g1_screenSize.min_x+1)+g1_screenSize.min_x;	// 1-20
-			// rand() : 0-6**** ì¤‘ í•˜ë‚˜ì˜ ê°’ ë°˜í™˜
-			cDoughnut.Y = g1_screenSize.min_y;
-			bDoughnut = TRUE;
-		}
-
-		chInput = getch();
-		// í‚¤ë³´ë“œ ê°’ ì•„ìŠ¤í‚¤ì½”ë“œ ì €ì¥
-		switch(chInput) {
-		case 75:	// LEFT
-
-			break;
-		case 77:	// RIGHT
-
-			break;
-		}
-	}
-
-
-
-
-
-
-	int nLife = 3;
-	int nDoughnut = lv+2;
-	int nCount = 0;
-	int bDoughnut = FALSE;
-	COORD cDoughnut;
-	int current = (g1_screenInfo.max_x-g1_screenInfo.min_x)/2;
-	char chInput;
-/*
-	// loading
+	int bDoughnut;	// ÇöÀç µµ³Ó Á¸Àç ¿©ºÎ
+	COORD cDoughnut; // ÇöÀç µµ³Ó À§Ä¡ x y
+	char chInput; // ¹æÇâÅ° <- -> ÀÔ·Â ÀúÀå
+	int nCount = 0; // ¹İº¹¹® ÇöÀç ¹İº¹ È½¼ö ÀúÀå
+	int cCharacter = (g1_screenSize.min_x+g1_screenSize.max_x)/2; // ÇöÀç Ä³¸¯ÅÍ À§Ä¡ x
+	int nDoughnut = lv+2;	// ÇöÀç ³²Àº µµ³Ó °³¼ö
+	int nLife = 3;		// ÇöÀç ³²Àº ¸ñ¼û °³¼ö
+	
 	system("cls");
 	for(int i=0; i<3; i++) {
 		setCursorPosition(3,4);
@@ -72,69 +44,85 @@ int g1_runRound(int lv) {
 		Sleep(1000);
 	}
 	system("cls");
-*/
+
 	g1_renderScreen();
 
-	// game
+	setCursorPosition(cCharacter,g1_screenSize.max_y);
+	printf("%s",g1_character);
+	// Ä³¸¯ÅÍ Ã³À½ À§Ä¡¿¡ ±×¸®±â
+
 	while(TRUE) {
-		setCursorPosition(7,g1_screenInfo.min_y-2);
+		setCursorPosition(7,g1_screenSize.min_y-2);
 		printf("%d",nLife);
-		setCursorPosition(21,g1_screenInfo.min_y-2);
+		setCursorPosition(21,g1_screenSize.min_y-2);
 		printf("%d",nDoughnut);
-		if(bDoughnut == TRUE) {
-			if(nCount%(50-lv*10) == 0) {
+		// È­¸é¿¡ ¸ñ¼û µµ³Ó °³¼ö Ãâ·Â
+
+		if(bDoughnut) {	// µµ³Ó Á¸Àç
+			if(nCount%(50-lv*10) == 0) {	// ÀÏÁ¤ ½Ã°£ÀÌ Áö³¯ ¶§¸¶´Ù µµ³Ó ÀÌµ¿ ¼öÇà
 				setCursorPosition(cDoughnut.X,cDoughnut.Y);
-				printf("  ");
+				printf("  ");	// ÇöÀç À§Ä¡ µµ³Ó Áö¿ì±â
 				
-				cDoughnut.Y++;
+				cDoughnut.Y++;	// µµ³Ó y À§Ä¡ 1 Áõ°¡
 
 				setCursorPosition(cDoughnut.X,cDoughnut.Y);
-				printf("%s",g1_doughnut);
-
-				if(cDoughnut.Y==g1_screenInfo.max_y) {
+				printf("%s",g1_doughnut);	// »õ·Î¿î À§Ä¡ µµ³Ó ±×¸®±â
+				
+				if(cDoughnut.Y == g1_screenSize.max_y) {	// µµ³ÓÀÌ ¸Ç ¾Æ·¡Ä­¿¡ µµÂø
 					setCursorPosition(cDoughnut.X,cDoughnut.Y);
-					printf("  ",g1_doughnut);
-					bDoughnut = FALSE;
-					if(current>=cDoughnut.X-1 && current<=cDoughnut.X+1) {
-						if(nDoughnut == 0)	return TRUE;
-						else				nDoughnut--;
+					printf("  ",g1_doughnut);	// ¹Ù´Ú µµÂø ½Ã µµ³Ó Áö¿ì±â
+
+					bDoughnut = FALSE;	// µµ³Ó ´õÀÌ»ó Á¸Àç x
+					if(cCharacter >= cDoughnut.X-1 && cCharacter <= cDoughnut.X+1) {	// Ä³¸¯ÅÍ µµ³Ó ºÎµúÈû
+						if(nDoughnut == 1)	return TRUE;	// ÇØ´ç ¶ó¿îµå ÀÌ°Ü¼­ Á¾·á
+						else				nDoughnut--;	// ÇöÀç ³²Àº µµ³Ó -1
 					}
-					else {
-						if(nLife == 1)	return FALSE;
-						else			nLife--;
+					else {	// µµ³Ó ¹Ù´Ú ºÎµúÈû
+						if(nLife == 1)	return FALSE;	// ÇØ´ç ¶ó¿îµå Á®¼­ Á¾·á
+						else			nLife--;		// ÇöÀç ³²Àº ¸ñ¼û -1
 					}
 				}
 			}
 		}
-		else {
+		else {	// µµ³Ó Á¸Àç x
+			// µµ³Ó ¸¸µç´Ù
+			// rand() : 0-6**** Áß ÇÏ³ªÀÇ °ª ¹İÈ¯
+			cDoughnut.X = rand()%(g1_screenSize.max_x-g1_screenSize.min_x+1)+g1_screenSize.min_x;	// 1-20
+			cDoughnut.Y = g1_screenSize.min_y;
 			bDoughnut = TRUE;
-			cDoughnut.X = rand()%(g1_screenInfo.max_x-g1_screenInfo.min_x);
-			cDoughnut.Y = g1_screenInfo.min_y;
 		}
 
-		// input
-		if(kbhit())	{
+		if(kbhit()) {	// Å°º¸µå ÀÔ·ÂÀÌ µé¾î¿ÔÀ» ¶§
 			chInput = getch();
-			setCursorPosition(current,g1_screenInfo.max_y);
+			// Å°º¸µå °ª ¾Æ½ºÅ°ÄÚµå ÀúÀå
+
+			setCursorPosition(cCharacter,g1_screenSize.max_y);
 			printf("  ");
+			// ÇöÀç À§Ä¡ Ä³¸¯ÅÍ Áö¿ì±â
 
 			switch(chInput) {
-			case LEFT:
-				if(g1_screenInfo.min_x <= current - 1)	current--;
+			case 75:	// LEFT	
+				if(g1_screenSize.min_x <= cCharacter-1)	cCharacter--;
+					// Ä³¸¯ÅÍ°¡ ¿ŞÂÊÀ¸·Î ÀÌµ¿ÇßÀ» ¶§,
+					// ±× À§Ä¡°¡ ³¡ À§Ä¡º¸´Ù Å©°Å³ª °°À¸¸é ÀÌµ¿ / ¾Æ´Ï¸é ÀÌµ¿ x
 				break;
-			case RIGHT:
-				if(g1_screenInfo.max_x > current + 1)	current++;
+			case 77:	// RIGHT
+				if(g1_screenSize.max_x >= cCharacter+2)	cCharacter++;
+					// Ä³¸¯ÅÍ°¡ ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ÇßÀ» ¶§,
+					// ±× À§Ä¡°¡ ³¡ À§Ä¡º¸´Ù ÀÛ°Å³ª °°À¸¸é ÀÌµ¿ / ¾Æ´Ï¸é ÀÌµ¿ x
 				break;
 			}
 
-			setCursorPosition(current,g1_screenInfo.max_y);
+			setCursorPosition(cCharacter,g1_screenSize.max_y);
 			printf("%s",g1_character);
+			// »õ·Î¿î À§Ä¡ Ä³¸¯ÅÍ ±×¸®±â
 		}
-		
-		Sleep(10);
+
+		Sleep(10);	// 0.01ÃÊ ÇÁ·Î±×·¥ Á¤Áö
 		if(nCount == 119)	nCount = 0;
-		else				nCount++;
+		else				nCount++;	// nCount ¿À¹ö ÇÃ·Î¿ì ¹æÁö
 	}
+
 }
 
 void g1_renderScreen() {
@@ -157,6 +145,4 @@ void g1_renderScreen() {
 		setCursorPosition(g1_screenSize.max_x+1,i);
 		printf("*");
 	}
-	setCursorPosition((g1_screenSize.max_x-g1_screenSize.min_x)/2,g1_screenSize.max_y);
-	//printf("%s",g1_character);
 }

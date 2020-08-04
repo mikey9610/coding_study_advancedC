@@ -3,8 +3,7 @@
 
 #include "basic_tool.h"
 
-// global
-struct _g1_screenInfo {
+struct _g1_screenSize {
 	int min_x;
 	int max_x;
 	int min_y;
